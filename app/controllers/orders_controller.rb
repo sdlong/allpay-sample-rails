@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
   before_action :set_order, only: [:show, :edit, :update, :destroy]
+  protect_from_forgery except: :notify
 
   # GET /orders
   # GET /orders.json
@@ -59,6 +60,13 @@ class OrdersController < ApplicationController
       format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def notify
+    order = Order.find(params[:id])
+    order.paid! if params[:RtnCode] == "1"
+
+    render text: '1|OK', status: 200
   end
 
   private

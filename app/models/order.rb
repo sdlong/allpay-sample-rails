@@ -4,4 +4,8 @@ class Order < ActiveRecord::Base
   def paid?
     paid
   end
+
+  def paid!
+    self.update(paid: true)
+  end
 end
