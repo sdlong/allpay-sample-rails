@@ -15,10 +15,15 @@
   <%= @order.price %>
 </p>
 
-<p>
-  <strong>Paid:</strong>
-  <%= @order.paid %>
-</p>
+<% if @order.paid? %>
+  <p>
+    此訂單已付款
+  </p>
+<% else %>
+  <%= render_payment_service_button(@order, "credit_card") %>
+  <%= render_payment_service_button(@order, "cvs") %>
+  <%= render_payment_service_button(@order, "atm") %>
+<% end %>
 
 <%= link_to 'Edit', edit_order_path(@order) %> |
 <%= link_to 'Back', orders_path %>
